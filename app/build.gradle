@@ -8,6 +8,7 @@ android {
     compileSdk 37
 
     defaultConfig {
+        applicationId "com.rama.${app_name}_forever"
         targetSdk 37
         versionCode 1
         versionName "${current_year}.${versionCode}"
@@ -19,13 +20,11 @@ android {
 
     productFlavors {
         forever {
-            applicationId "com.rama.${app_name}_forever"
             dimension "androidVersion"
             minSdk 5
         }
 
         zero {
-            applicationId "com.rama.${app_name}_zero"
             dimension "androidVersion"
             minSdk 21
         }
