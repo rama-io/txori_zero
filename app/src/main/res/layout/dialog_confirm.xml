@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Dialog_Root">
+
+    <TextView
+        style="@style/H2_Center"
+        android:text="@string/header_import_backup" />
+
+    <View style="@style/SeparatorListVertical" />
+
+    <TextView
+        style="@style/Text_Center"
+        android:text="@string/label_import_message" />
+
+    <View style="@style/SeparatorListVertical" />
+
+    <Button
+        android:id="@+id/yes_button"
+        style="@style/BTN_danger"
+        android:text="@string/btn_import" />
+
+    <include layout="@layout/dialog_cancel_button" />
+</LinearLayout>

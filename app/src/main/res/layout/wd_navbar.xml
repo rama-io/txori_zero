@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:id="@+id/nav_home"
+        style="@style/NavBtn">
+
+        <ImageView
+            android:id="@+id/nav_home_icon"
+            style="@style/Icon24"
+            android:contentDescription="@string/alt_nav_home"
+            android:src="@drawable/px_bullet_list" />
+    </FrameLayout>
+
+    <View style="@style/SeparatorListHorizontalSmall" />
+
+    <FrameLayout
+        android:id="@+id/nav_stopwatch"
+        style="@style/NavBtn">
+
+        <ImageView
+            android:id="@+id/nav_stopwatch_icon"
+            style="@style/Icon24"
+            android:contentDescription="@string/alt_nav_stopwatch"
+            android:src="@drawable/px_stopwatch" />
+    </FrameLayout>
+
+    <View style="@style/SeparatorListHorizontalSmall" />
+
+    <FrameLayout
+        android:id="@+id/nav_timer"
+        style="@style/NavBtn">
+
+        <ImageView
+            android:id="@+id/nav_timer_icon"
+            style="@style/Icon24"
+            android:contentDescription="@string/alt_nav_timer"
+            android:src="@drawable/px_timer" />
+    </FrameLayout>
+
+    <View style="@style/SeparatorListHorizontalSmall" />
+
+    <FrameLayout
+        android:id="@+id/nav_roulette"
+        style="@style/NavBtn">
+
+        <ImageView
+            android:id="@+id/nav_roulette_icon"
+            style="@style/Icon24"
+            android:contentDescription="@string/alt_nav_roulette"
+            android:src="@drawable/px_shuffle" />
+    </FrameLayout>
+</merge>

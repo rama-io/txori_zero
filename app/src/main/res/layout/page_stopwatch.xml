@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VerticalList"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/stopwatch_counter"
+        style="@style/H1_Center"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:text="@string/stopwatch_zero" />
+
+    <Button
+        android:id="@+id/stopwatch_reset"
+        style="@style/BTN"
+        android:text="@string/btn_reset_stopwatch" />
+</LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VerticalList"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/roulette_choose"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout style="@style/VerticalList">
+
+            <TextView
+                style="@style/H3"
+                android:text="@string/header_timer" />
+
+            <View style="@style/SeparatorListVertical" />
+
+            <LinearLayout style="@style/HorizontalList_BG2">
+
+                <EditText
+                    android:id="@+id/roulette_timer_input"
+                    style="@style/EditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:digits="0123456789"
+                    android:hint="@string/hint_timer"
+                    android:inputType="number"
+                    android:maxLength="6" />
+
+                <FrameLayout
+                    android:id="@+id/roulette_timer_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="12sp">
+
+                    <ImageView
+                        style="@style/Icon24"
+                        android:contentDescription="@string/alt_save"
+                        android:src="@drawable/px_disk" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <View style="@style/SeparatorListVertical" />
+
+            <TextView
+                style="@style/H3"
+                android:text="@string/header_lists" />
+
+            <View style="@style/SeparatorListVertical" />
+
+            <com.rama.txori_zero.widgets.WdRadioGroup
+                android:id="@+id/roulette_lists"
+                style="@style/VerticalList_BG2" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/roulette_running"
+        style="@style/VerticalList"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/roulette_counter"
+            style="@style/H1_Center"
+            android:background="@android:color/transparent"
+            android:text="@string/clock_zero_full" />
+
+        <TextView
+            android:id="@+id/roulette_task_name"
+            style="@style/H2_Center"
+            android:text="@string/status_next_placeholder" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/roulette_start"
+        style="@style/BTN"
+        android:text="@string/btn_start_roulette" />
+
+    <Button
+        android:id="@+id/roulette_next"
+        style="@style/BTN"
+        android:text="@string/btn_next"
+        android:visibility="gone" />
+</LinearLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/HorizontalList">
+
+    <TextView
+        android:id="@+id/group_label"
+        style="@style/H3"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:paddingTop="@dimen/space_between_elements"
+        android:paddingBottom="@dimen/space_between_elements" />
+
+    <FrameLayout
+        android:id="@+id/reset_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            style="@style/Icon18"
+            android:contentDescription="@string/alt_reset_group"
+            android:src="@drawable/px_refresh"
+            android:tag="accent" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/start_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/start_group_icon"
+            style="@style/Icon18"
+            android:contentDescription="@string/alt_start_group"
+            android:src="@drawable/px_play"
+            android:tag="accent" />
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/row_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/surface_0" />
+
+    <View
+        android:id="@+id/progress_bg"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/surface_1" />
+
+    <View
+        android:id="@+id/progress_rest_bg"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/accent" />
+
+    <LinearLayout
+        style="@style/HorizontalList"
+        android:padding="12dp">
+
+        <LinearLayout
+            style="@style/HorizontalList"
+            android:layout_width="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/task_label"
+                style="@style/Text"
+                android:layout_width="wrap_content" />
+
+            <View style="@style/SeparatorListHorizontal" />
+
+            <TextView
+                android:id="@+id/task_frequency"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:textColor="@color/disabled" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/task_duration"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:textColor="@color/disabled" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VerticalList"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/time_container"
+        style="@style/VerticalList"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/current_task_name"
+            style="@style/H2_Center"
+            android:text="@string/status_greeting" />
+
+        <TextView
+            android:id="@+id/current_task_timer"
+            style="@style/H1_Center"
+            android:text="@string/clock_zero" />
+
+        <TextView
+            android:id="@+id/next_task_name"
+            style="@style/H2_Center"
+            android:text="@string/status_next_placeholder"
+            android:textColor="@color/disabled" />
+
+        <LinearLayout
+            android:id="@+id/controllers"
+            style="@style/HorizontalList"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:id="@+id/repeat_task"
+                style="@style/IconBtn">
+
+                <ImageView
+                    style="@style/Icon24"
+                    android:contentDescription="@string/alt_repeat_task"
+                    android:src="@drawable/px_refresh"
+                    android:tag="accent" />
+            </FrameLayout>
+
+            <View style="@style/SeparatorListHorizontal" />
+
+            <FrameLayout
+                android:id="@+id/add_time"
+                style="@style/IconBtn">
+
+                <ImageView
+                    style="@style/Icon24"
+                    android:contentDescription="@string/alt_add_time"
+                    android:src="@drawable/px_timer_30"
+                    android:tag="accent" />
+            </FrameLayout>
+
+            <View style="@style/SeparatorListHorizontal" />
+
+            <FrameLayout
+                android:id="@+id/play_pause"
+                style="@style/IconBtn">
+
+                <ImageView
+                    android:id="@+id/play_pause_icon"
+                    style="@style/Icon24"
+                    android:contentDescription="@string/alt_play_pause"
+                    android:src="@drawable/px_play"
+                    android:tag="accent" />
+            </FrameLayout>
+
+            <View style="@style/SeparatorListHorizontal" />
+
+            <FrameLayout
+                android:id="@+id/skip_task"
+                style="@style/IconBtn">
+
+                <ImageView
+                    style="@style/Icon24"
+                    android:contentDescription="@string/alt_skip_task"
+                    android:src="@drawable/px_next"
+                    android:tag="accent" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/task_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="4dp"
+            android:fadingEdge="none"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/active_group_header"
+            style="@style/HorizontalList"
+            android:layout_gravity="top"
+            android:background="@color/base"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/active_group_label"
+                style="@style/H3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp" />
+
+            <FrameLayout
+                android:id="@+id/active_reset_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp">
+
+                <ImageView
+                    style="@style/Icon18"
+                    android:contentDescription="@string/alt_reset_group"
+                    android:src="@drawable/px_refresh"
+                    android:tag="accent" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/active_start_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/active_play_pause_icon"
+                    style="@style/Icon18"
+                    android:contentDescription="@string/alt_start_group"
+                    android:src="@drawable/px_play"
+                    android:tag="accent" />
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/add_group_button"
+        style="@style/BTN"
+        android:text="@string/btn_add_group"
+        android:visibility="gone" />
+</LinearLayout>

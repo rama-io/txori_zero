@@ -1,0 +1,1 @@
+A minimal focus-session timer. Lists of tasks, a stopwatch, a timer and a roulette.

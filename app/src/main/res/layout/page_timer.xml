@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VerticalList"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/timer_button"
+        style="@style/H1_Center"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:text="@string/clock_zero_full" />
+
+    <FrameLayout
+        android:id="@+id/timer_edit_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/timer_input"
+            style="@style/H1_Center"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:cursorVisible="false"
+            android:digits="0123456789"
+            android:hint="@string/hint_timer"
+            android:inputType="number"
+            android:maxLength="6" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/timer_save"
+        style="@style/BTN"
+        android:text="@string/btn_save_timer"
+        android:visibility="gone" />
+
+    <View style="@style/SeparatorListVertical" />
+
+    <Button
+        android:id="@+id/timer_reset"
+        style="@style/BTN"
+        android:text="@string/btn_reset_timer" />
+</LinearLayout>

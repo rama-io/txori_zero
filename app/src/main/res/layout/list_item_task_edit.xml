@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VerticalList"
+    android:background="@color/surface_0"
+    android:padding="@dimen/space_between_elements">
+
+    <LinearLayout style="@style/HorizontalList">
+
+        <FrameLayout
+            android:id="@+id/edit_task_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="12dp">
+
+            <ImageView
+                style="@style/Icon18"
+                android:contentDescription="@string/alt_edit"
+                android:src="@drawable/px_edit"
+                android:tag="accent" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/ascend_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="12dp">
+
+            <ImageView
+                style="@style/Icon18"
+                android:contentDescription="@string/alt_move_up"
+                android:src="@drawable/px_chevron_up" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/descend_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="12dp">
+
+            <ImageView
+                style="@style/Icon18"
+                android:contentDescription="@string/alt_move_down"
+                android:src="@drawable/px_chevron_down" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/HorizontalList"
+        android:background="@color/base"
+        android:padding="@dimen/space_between_elements">
+
+        <TextView
+            android:id="@+id/task_label"
+            style="@style/Text"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/task_frequency"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:paddingRight="@dimen/space_between_elements"
+            android:textColor="@color/disabled" />
+
+        <TextView
+            android:id="@+id/task_duration"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:textColor="@color/disabled" />
+    </LinearLayout>
+</LinearLayout>

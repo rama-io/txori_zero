@@ -1,0 +1,1 @@
+Built entirely in Java running fully on-device.

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Txori Zero</string>
+    <string name="app_desc">A minimal focus-session timer. Lists of tasks, a stopwatch, a timer and a roulette.</string>
+    <string name="app_version">%1$s v%2$d</string>
+    <string name="app_claims_ads_desc">No Ads</string>
+    <string name="app_claims_background_tasks_desc">No Background Activity</string>
+    <string name="app_claims_offline_desc">Works Completely Offline</string>
+    <string name="app_claims_trackers_desc">No Tracking</string>
+    <string name="app_claims_min_api">Supports Android 2.0 and Later</string>
+
+    <string name="license_gpl3" translatable="false">GPL 3.0</string>
+
+    <string name="header_settings">Settings</string>
+    <string name="header_system">System</string>
+    <string name="header_notifications">Notifications</string>
+    <string name="header_themes">Themes</string>
+    <string name="header_data">Data</string>
+    <string name="header_add_group">Add group</string>
+    <string name="header_edit_group">Edit group</string>
+    <string name="header_add_task">Add task</string>
+    <string name="header_edit_task">Edit task</string>
+    <string name="header_import_backup">Import backup?</string>
+    <string name="header_lists">Lists</string>
+    <string name="header_timer">Timer</string>
+
+    <string name="btn_go_back">GO BACK</string>
+    <string name="btn_about">ABOUT</string>
+    <string name="btn_cancel">CANCEL</string>
+    <string name="btn_save">SAVE</string>
+    <string name="btn_create">CREATE</string>
+    <string name="btn_add_group">+ ADD GROUP</string>
+    <string name="btn_delete_group">DELETE GROUP</string>
+    <string name="btn_delete_task">DELETE TASK</string>
+    <string name="btn_next">NEXT</string>
+    <string name="btn_start_roulette">START ROULETTE</string>
+    <string name="btn_save_timer">SAVE TIMER</string>
+    <string name="btn_reset_timer">RESET TIMER</string>
+    <string name="btn_reset_stopwatch">RESET STOPWATCH</string>
+    <string name="btn_export_backup">EXPORT BACKUP</string>
+    <string name="btn_import_backup">IMPORT BACKUP</string>
+    <string name="btn_import">IMPORT</string>
+
+    <string name="label_keep_screen_awake">Keep screen awake</string>
+    <string name="label_app_zoom">App Zoom</string>
+    <string name="label_play_sounds">Play sounds</string>
+    <string name="label_vibrate">Vibrate</string>
+    <string name="label_flash_screen">Flash screen</string>
+    <string name="label_camera_flash">Use camera flash</string>
+    <string name="label_theme_random">Catppuccin Mocha (Random)</string>
+    <string name="label_task_label">Task label</string>
+    <string name="label_task_duration">Duration (HHMMSS)</string>
+    <string name="label_rest_duration">Rest duration (HHMMSS)</string>
+    <string name="label_group">Group</string>
+    <string name="label_group_name">Group name</string>
+    <string name="label_import_message">This replaces all your current lists and settings with the contents of the backup file, then restarts the app</string>
+    <string name="hint_timer">HHMMSS</string>
+
+    <string name="label_zoom_unit" translatable="false">%</string>
+    <string name="label_collapse_indicator" translatable="false">[-]</string>
+    <string name="label_expand_indicator" translatable="false">[+]</string>
+
+    <string name="status_greeting">Kaixo!</string>
+    <string name="status_done">Done!</string>
+    <string name="status_resting">Resting...</string>
+    <string name="status_go">Go!</string>
+    <string name="status_next_placeholder">---</string>
+    <string name="status_next_task">Next: %1$s</string>
+    <string name="clock_zero" translatable="false">00:00</string>
+    <string name="clock_zero_full" translatable="false">00:00:00</string>
+    <string name="stopwatch_zero" translatable="false">0.0</string>
+
+    <string name="toast_name_empty">Name cannot be empty</string>
+    <string name="toast_label_empty">Label cannot be empty</string>
+    <string name="toast_timer_saved">Timer saved</string>
+    <string name="toast_backup_exported">Exported %1$d lists and %2$d items</string>
+    <string name="toast_backup_imported">Imported %1$d lists and %2$d items</string>
+    <string name="toast_backup_failed">Backup failed</string>
+    <string name="toast_backup_invalid">That file is not a valid Txori backup</string>
+
+    <string name="alt_open_settings">Open settings</string>
+    <string name="alt_edit">Edit</string>
+    <string name="alt_close">Close</string>
+    <string name="alt_save">Save</string>
+    <string name="alt_add_task">Add task</string>
+    <string name="alt_move_up">Move up</string>
+    <string name="alt_move_down">Move down</string>
+    <string name="alt_repeat_task">Repeat task</string>
+    <string name="alt_add_time">Add 30 seconds</string>
+    <string name="alt_play_pause">Play or pause</string>
+    <string name="alt_skip_task">Skip task</string>
+    <string name="alt_reset_group">Reset group</string>
+    <string name="alt_start_group">Start group</string>
+    <string name="alt_nav_home">Lists</string>
+    <string name="alt_nav_stopwatch">Stopwatch</string>
+    <string name="alt_nav_timer">Timer</string>
+    <string name="alt_nav_roulette">Roulette</string>
+</resources>
