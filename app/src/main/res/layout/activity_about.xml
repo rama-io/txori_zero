@@ -55,6 +55,13 @@
                     <com.rama.txori_zero.widgets.WdLabel
                         style="@style/BlockFlow"
                         app:icon="@drawable/px_check"
+                        app:text="@string/app_claims_size" />
+
+                    <View style="@style/SeparatorListHorizontal" />
+
+                    <com.rama.txori_zero.widgets.WdLabel
+                        style="@style/BlockFlow"
+                        app:icon="@drawable/px_check"
                         app:text="@string/app_claims_min_api" />
 
                     <View style="@style/SeparatorListHorizontal" />
