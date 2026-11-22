@@ -12,9 +12,9 @@ import com.rama.txori_zero.R;
 import com.rama.txori_zero.objects.Themes;
 
 public class WdNavbar extends LinearLayout {
-    public static final int HOME = 0;
-    public static final int STOPWATCH = 1;
-    public static final int TIMER = 2;
+    public static final int STOPWATCH = 0;
+    public static final int TIMER = 1;
+    public static final int HOME = 2;
     public static final int ROULETTE = 3;
 
     public interface OnNavigateListener {
@@ -23,6 +23,7 @@ public class WdNavbar extends LinearLayout {
 
     private final View[] buttons = new View[4];
     private final ImageView[] icons = new ImageView[4];
+    private final View[] separators = new View[3];
     private OnNavigateListener listener;
 
     public WdNavbar(Context context) {
@@ -40,11 +41,24 @@ public class WdNavbar extends LinearLayout {
         icons[STOPWATCH] = (ImageView) findViewById(R.id.nav_stopwatch_icon);
         icons[TIMER] = (ImageView) findViewById(R.id.nav_timer_icon);
         icons[ROULETTE] = (ImageView) findViewById(R.id.nav_roulette_icon);
+        // The layout alternates button, separator, button, ...
+        for (int i = 0; i < separators.length; i++) {
+            separators[i] = getChildAt(i * 2 + 1);
+        }
         for (int i = 0; i < buttons.length; i++) {
             final int page = i;
             buttons[i].setOnClickListener(v -> {
                 if (listener != null) listener.onNavigate(page);
             });
+        }
+    }
+
+    /** Lays the buttons out in the given order of page ids. */
+    public void setOrder(int[] order) {
+        removeAllViews();
+        for (int i = 0; i < order.length; i++) {
+            addView(buttons[order[i]]);
+            if (i < separators.length) addView(separators[i]);
         }
     }
 

@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ import com.rama.txori_zero.managers.ZoomManager;
 import com.rama.txori_zero.objects.PrefTheme;
 import com.rama.txori_zero.objects.Themes;
 import com.rama.txori_zero.widgets.WdCheckbox;
+import com.rama.txori_zero.widgets.WdNavbar;
 import com.rama.txori_zero.widgets.WdRadio;
 import com.rama.txori_zero.widgets.WdRadioGroup;
 
@@ -40,6 +44,7 @@ public class Settings extends BaseActivity {
         SystemBars.applyInsets(root);
         FontManager.apply(root, FontManager.getJersey25(this));
         setupSystem();
+        setupTabOrder();
         setupNotifications();
         setupThemes();
         setupData();
@@ -66,6 +71,62 @@ public class Settings extends BaseActivity {
         zoom.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) applyZoom();
         });
+    }
+
+    private int tabLabel(int page) {
+        switch (page) {
+            case WdNavbar.STOPWATCH:
+                return R.string.alt_nav_stopwatch;
+            case WdNavbar.TIMER:
+                return R.string.alt_nav_timer;
+            case WdNavbar.ROULETTE:
+                return R.string.alt_nav_roulette;
+            default:
+                return R.string.alt_nav_home;
+        }
+    }
+
+    private void setupTabOrder() {
+        renderTabOrder();
+    }
+
+    /** One row per tab with up / down arrows, like the list editor. Rebuilt after every move. */
+    private void renderTabOrder() {
+        final PrefsManager prefs = PrefsManager.getInstance(this);
+        final int[] order = prefs.getTabOrder();
+        LinearLayout list = (LinearLayout) findViewById(R.id.tab_order_list);
+        list.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (int i = 0; i < order.length; i++) {
+            final int index = i;
+            View row = inflater.inflate(R.layout.list_item_tab_order, list, false);
+            ((TextView) row.findViewById(R.id.tab_label)).setText(tabLabel(order[i]));
+            View up = row.findViewById(R.id.tab_up);
+            View down = row.findViewById(R.id.tab_down);
+            // The ends can't move further; keep the space so the arrows stay aligned.
+            up.setVisibility(i == 0 ? View.INVISIBLE : View.VISIBLE);
+            down.setVisibility(i == order.length - 1 ? View.INVISIBLE : View.VISIBLE);
+            up.setOnClickListener(v -> moveTab(order, index, index - 1));
+            down.setOnClickListener(v -> moveTab(order, index, index + 1));
+            if (i > 0) {
+                View separator = new View(this);
+                separator.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.space_between_elements)));
+                list.addView(separator);
+            }
+            list.addView(row);
+        }
+        FontManager.apply(list, FontManager.getJersey25(this));
+        ZoomManager.apply(this, list);
+        ThemeManager.applyViews(this, list);
+    }
+
+    private void moveTab(int[] order, int from, int to) {
+        int tmp = order[from];
+        order[from] = order[to];
+        order[to] = tmp;
+        PrefsManager.getInstance(this).setTabOrder(order);
+        renderTabOrder();
     }
 
     private void setupNotifications() {

@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.rama.txori_zero.R;
 import com.rama.txori_zero.activities.Main;
 import com.rama.txori_zero.helpers.Hms;
+import com.rama.txori_zero.managers.TimerService;
 
 public class StopwatchPage implements Page {
     private final Main host;
@@ -44,12 +45,14 @@ public class StopwatchPage implements Page {
         startTime = SystemClock.elapsedRealtime() - pausedElapsed;
         running = true;
         handler.post(ticker);
+        TimerService.setStopwatch(host, true, pausedElapsed);
     }
 
     private void pause() {
         pausedElapsed = SystemClock.elapsedRealtime() - startTime;
         running = false;
         handler.removeCallbacks(ticker);
+        TimerService.setStopwatch(host, false, 0);
     }
 
     private void reset() {
@@ -79,5 +82,6 @@ public class StopwatchPage implements Page {
     @Override
     public void destroy() {
         handler.removeCallbacks(ticker);
+        TimerService.setStopwatch(host, false, 0);
     }
 }

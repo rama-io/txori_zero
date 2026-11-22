@@ -14,6 +14,7 @@ import com.rama.txori_zero.activities.Main;
 import com.rama.txori_zero.helpers.Hms;
 import com.rama.txori_zero.managers.NotifyManager;
 import com.rama.txori_zero.managers.PrefsManager;
+import com.rama.txori_zero.managers.TimerService;
 
 public class TimerPage implements Page {
     private final Main host;
@@ -40,6 +41,7 @@ public class TimerPage implements Page {
                 running = false;
                 remainingMs = 0;
                 timerButton.setText(R.string.clock_zero_full);
+                TimerService.setTimer(host, false, 0);
                 NotifyManager.finish(host, host.flashAction());
                 return;
             }
@@ -83,6 +85,7 @@ public class TimerPage implements Page {
         running = true;
         startTime = SystemClock.elapsedRealtime();
         handler.post(ticker);
+        TimerService.setTimer(host, true, remainingMs);
     }
 
     private void pause() {
@@ -90,6 +93,7 @@ public class TimerPage implements Page {
         remainingMs -= SystemClock.elapsedRealtime() - startTime;
         running = false;
         handler.removeCallbacks(ticker);
+        TimerService.setTimer(host, false, 0);
     }
 
     private void reset() {
@@ -103,6 +107,7 @@ public class TimerPage implements Page {
         String digits = Hms.normalize(input.getText().toString());
         handler.removeCallbacks(ticker);
         running = false;
+        TimerService.setTimer(host, false, 0);
         initialMs = Hms.toMs(digits);
         remainingMs = initialMs;
         timerButton.setText(Hms.display(digits));
@@ -157,5 +162,6 @@ public class TimerPage implements Page {
     @Override
     public void destroy() {
         handler.removeCallbacks(ticker);
+        TimerService.setTimer(host, false, 0);
     }
 }

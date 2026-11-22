@@ -24,6 +24,8 @@ public class PrefsManager {
 
     private static final String KEY_THEME = "settings:theme";
     private static final String KEY_THEME_ROLLED_ID = "settings:theme_rolled_id";
+    private static final String KEY_TAB_ORDER = "settings:tab_order";
+    private static final String DEFAULT_TAB_ORDER = "2,0,1,3";
     private static final String KEY_ZOOM_PERCENT = "settings:zoom_percent";
     private static final String KEY_APP_TIMER = "app:timer";
     private static final String KEY_ROULETTE_TIMER = "roulette:timer";
@@ -61,6 +63,49 @@ public class PrefsManager {
 
     public void setRolledTheme(String themeId) {
         prefs.edit().putString(KEY_THEME_ROLLED_ID, themeId).commit();
+    }
+
+    /** Page ids (see WdNavbar) in tab order. Always a permutation of 0..3, whatever was stored. */
+    public int[] getTabOrder() {
+        return parseTabOrder(prefs.getString(KEY_TAB_ORDER, DEFAULT_TAB_ORDER));
+    }
+
+    public void setTabOrder(int[] order) {
+        prefs.edit().putString(KEY_TAB_ORDER, joinTabOrder(order)).commit();
+    }
+
+    private static String joinTabOrder(int[] order) {
+        StringBuilder sb = new StringBuilder();
+        for (int id : order) {
+            if (sb.length() > 0) sb.append(',');
+            sb.append(id);
+        }
+        return sb.toString();
+    }
+
+    private static int[] parseTabOrder(String raw) {
+        int count = DEFAULT_TAB_ORDER.split(",").length;
+        int[] order = new int[count];
+        boolean[] seen = new boolean[count];
+        String[] parts = raw == null ? new String[0] : raw.split(",");
+        int n = 0;
+        for (String part : parts) {
+            try {
+                int id = Integer.parseInt(part.trim());
+                if (id >= 0 && id < count && !seen[id] && n < count) {
+                    seen[id] = true;
+                    order[n++] = id;
+                }
+            } catch (NumberFormatException ignored) {
+                // malformed entry
+            }
+        }
+        // Anything missing keeps its default relative position at the end.
+        for (String part : DEFAULT_TAB_ORDER.split(",")) {
+            int id = Integer.parseInt(part);
+            if (!seen[id]) order[n++] = id;
+        }
+        return order;
     }
 
     public int getZoomPercent() {
@@ -137,6 +182,7 @@ public class PrefsManager {
         try {
             json.put(KEY_THEME, getTheme());
             json.put(KEY_ZOOM_PERCENT, getZoomPercent());
+            json.put(KEY_TAB_ORDER, joinTabOrder(getTabOrder()));
             json.put(KEY_APP_TIMER, Hms.normalize(getAppTimer()));
             json.put(KEY_ROULETTE_TIMER, Hms.normalize(getRouletteTimer()));
             for (String key : BACKUP_BOOLEANS) {
@@ -157,6 +203,7 @@ public class PrefsManager {
         }
         int zoom = json.optInt(KEY_ZOOM_PERCENT, 0);
         if (zoom > 0) editor.putInt(KEY_ZOOM_PERCENT, ZoomManager.clamp(zoom));
+        if (json.has(KEY_TAB_ORDER)) editor.putString(KEY_TAB_ORDER, joinTabOrder(parseTabOrder(json.optString(KEY_TAB_ORDER))));
         if (json.has(KEY_APP_TIMER)) editor.putString(KEY_APP_TIMER, Hms.normalize(json.optString(KEY_APP_TIMER)));
         if (json.has(KEY_ROULETTE_TIMER)) editor.putString(KEY_ROULETTE_TIMER, Hms.normalize(json.optString(KEY_ROULETTE_TIMER)));
         for (String key : BACKUP_BOOLEANS) {

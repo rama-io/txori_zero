@@ -2,6 +2,8 @@ package com.rama.txori_zero.activities;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -73,10 +75,17 @@ public class Main extends BaseActivity {
         navbar = (WdNavbar) findViewById(R.id.navbar);
         navbar.setOnNavigateListener(page -> navigateTo(page));
 
-        if (savedInstanceState != null) {
-            currentPage = savedInstanceState.getInt(KEY_PAGE, WdNavbar.HOME);
-        }
+        int[] order = PrefsManager.getInstance(this).getTabOrder();
+        navbar.setOrder(order);
+        // The first tab is the landing page.
+        currentPage = savedInstanceState != null ? savedInstanceState.getInt(KEY_PAGE, order[0]) : order[0];
         navigateTo(currentPage);
+
+        // Android 13+ needs a runtime grant for the ongoing timer notification.
+        if (Build.VERSION.SDK_INT >= 33 && savedInstanceState == null
+                && checkSelfPermission("android.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{"android.permission.POST_NOTIFICATIONS"}, 1);
+        }
     }
 
     @Override
@@ -87,7 +96,8 @@ public class Main extends BaseActivity {
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-        // The settings screen may have changed the theme or zoom.
+        // The settings screen may have changed the tab order, theme or zoom.
+        navbar.setOrder(PrefsManager.getInstance(this).getTabOrder());
         refreshTheme();
     }
 

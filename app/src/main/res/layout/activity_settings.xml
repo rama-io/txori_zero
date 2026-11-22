@@ -80,6 +80,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:defaultExpanded="true"
+                app:header="@string/header_tabs_order"
+                app:key="settings:section:tabs_order">
+
+                <LinearLayout
+                    android:id="@+id/tab_order_list"
+                    style="@style/VerticalList" />
+            </com.rama.txori_zero.widgets.WdCollapsibleSection>
+
+            <View style="@style/SeparatorListVertical" />
+
+            <com.rama.txori_zero.widgets.WdCollapsibleSection
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:defaultExpanded="true"
                 app:header="@string/header_notifications"
                 app:key="settings:section:notifications">
 

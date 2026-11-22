@@ -14,6 +14,7 @@
 
     <string name="header_settings">Settings</string>
     <string name="header_system">System</string>
+    <string name="header_tabs_order">Tabs order</string>
     <string name="header_notifications">Notifications</string>
     <string name="header_themes">Themes</string>
     <string name="header_data">Data</string>
@@ -96,4 +97,8 @@
     <string name="alt_nav_stopwatch">Stopwatch</string>
     <string name="alt_nav_timer">Timer</string>
     <string name="alt_nav_roulette">Roulette</string>
+    <string name="notif_channel_name">Running clock</string>
+    <string name="notif_timer">Timer</string>
+    <string name="notif_stopwatch">Stopwatch</string>
+    <string name="notif_stopwatch_also">Stopwatch is running too</string>
 </resources>

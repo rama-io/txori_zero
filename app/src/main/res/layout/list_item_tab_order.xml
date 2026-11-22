@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/HorizontalList"
+    android:background="@color/surface_0">
+
+    <TextView
+        android:id="@+id/tab_label"
+        style="@style/Text"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:padding="12dp" />
+
+    <FrameLayout
+        android:id="@+id/tab_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            style="@style/Icon18"
+            android:contentDescription="@string/alt_move_up"
+            android:src="@drawable/px_chevron_up" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/tab_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            style="@style/Icon18"
+            android:contentDescription="@string/alt_move_down"
+            android:src="@drawable/px_chevron_down" />
+    </FrameLayout>
+</LinearLayout>
