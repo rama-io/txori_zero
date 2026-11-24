@@ -14,7 +14,8 @@
     <string name="header_system">System</string>
     <string name="header_tabs_order">Tabs order</string>
     <string name="header_notifications">Notifications</string>
-    <string name="header_themes">Themes</string>
+    <string name="header_theme">Theme</string>
+    <string name="header_accent">Accent</string>
     <string name="header_data">Data</string>
     <string name="header_add_group">Add group</string>
     <string name="header_edit_group">Edit group</string>
@@ -47,7 +48,7 @@
     <string name="label_vibrate">Vibrate</string>
     <string name="label_flash_screen">Flash screen</string>
     <string name="label_camera_flash">Use camera flash</string>
-    <string name="label_theme_random">Catppuccin Mocha (Random)</string>
+    <string name="label_accent_random">Random</string>
     <string name="label_task_label">Task label</string>
     <string name="label_task_duration">Duration (HHMMSS)</string>
     <string name="label_rest_duration">Rest duration (HHMMSS)</string>
@@ -78,7 +79,6 @@
     <string name="toast_backup_failed">Backup failed</string>
     <string name="toast_backup_invalid">That file is not a valid Txori backup</string>
 
-    <string name="alt_open_settings">Open settings</string>
     <string name="alt_edit">Edit</string>
     <string name="alt_close">Close</string>
     <string name="alt_save">Save</string>
@@ -95,6 +95,7 @@
     <string name="alt_nav_stopwatch">Stopwatch</string>
     <string name="alt_nav_timer">Timer</string>
     <string name="alt_nav_roulette">Roulette</string>
+    <string name="alt_nav_settings">Settings</string>
     <string name="notif_channel_name">Running clock</string>
     <string name="notif_timer">Timer</string>
     <string name="notif_stopwatch">Stopwatch</string>

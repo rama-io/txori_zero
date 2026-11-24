@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root"
     style="@style/VerticalList"
-    android:layout_height="match_parent"
-    android:background="@color/base"
-    android:paddingLeft="16dp"
-    android:paddingTop="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp">
+    android:layout_height="match_parent">
 
     <TextView
         style="@style/H2"
@@ -135,11 +129,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:defaultExpanded="true"
-                app:header="@string/header_themes"
+                app:header="@string/header_theme"
                 app:key="settings:section:appearance">
 
                 <com.rama.txori_zero.widgets.WdRadioGroup
                     android:id="@+id/theme_group"
+                    style="@style/VerticalList_BG2" />
+            </com.rama.txori_zero.widgets.WdCollapsibleSection>
+
+            <View
+                android:id="@+id/accent_separator"
+                style="@style/SeparatorListVertical" />
+
+            <com.rama.txori_zero.widgets.WdCollapsibleSection
+                android:id="@+id/accent_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:defaultExpanded="true"
+                app:header="@string/header_accent"
+                app:key="settings:section:accent">
+
+                <com.rama.txori_zero.widgets.WdRadioGroup
+                    android:id="@+id/accent_group"
                     style="@style/VerticalList_BG2" />
             </com.rama.txori_zero.widgets.WdCollapsibleSection>
 
@@ -177,10 +188,4 @@
         style="@style/BTN"
         android:text="@string/btn_about" />
 
-    <View style="@style/SeparatorListVertical" />
-
-    <Button
-        android:id="@+id/go_back"
-        style="@style/BTN"
-        android:text="@string/btn_go_back" />
 </LinearLayout>
