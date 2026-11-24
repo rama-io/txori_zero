@@ -22,8 +22,13 @@ public class PrefsManager {
     public static final String NOTIFY_FLASH = "notification:flash";
     public static final String NOTIFY_CAMERA = "notification:flash_camera";
 
-    private static final String KEY_THEME = "settings:theme";
-    private static final String KEY_THEME_ROLLED_ID = "settings:theme_rolled_id";
+    private static final String KEY_FLAVOR = "settings:flavor";
+    private static final String KEY_ACCENT = "settings:accent";
+    private static final String KEY_ACCENT_ROLLED = "settings:accent_rolled";
+    /** Older builds stored flavor and accent as one id, e.g. "catppuccin_mocha_blue". Only read to migrate. */
+    private static final String KEY_LEGACY_THEME = "settings:theme";
+    private static final String KEY_LEGACY_THEME_ROLLED = "settings:theme_rolled_id";
+    private static final String LEGACY_MOCHA_PREFIX = "catppuccin_mocha_";
     private static final String KEY_TAB_ORDER = "settings:tab_order";
     private static final String DEFAULT_TAB_ORDER = "2,0,1,3";
     private static final String KEY_ZOOM_PERCENT = "settings:zoom_percent";
@@ -40,6 +45,40 @@ public class PrefsManager {
 
     private PrefsManager(Context context) {
         prefs = context.getApplicationContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        migrateLegacyTheme();
+    }
+
+    /** Splits an old single theme id into {flavor, accent}, or null when it is not one. */
+    private static String[] parseLegacyTheme(String id) {
+        if (id == null) return null;
+        if (id.startsWith(LEGACY_MOCHA_PREFIX)) {
+            String accent = id.substring(LEGACY_MOCHA_PREFIX.length());
+            if (PrefTheme.ACCENT_RANDOM.equals(accent) || Themes.isAccent(accent)) {
+                return new String[]{"mocha", accent};
+            }
+            return null;
+        }
+        // Latte used to be fixed to its blue accent.
+        if ("catppuccin_latte".equals(id)) return new String[]{"latte", "blue"};
+        if (Themes.isFlavor(id) && !Themes.hasAccents(id)) return new String[]{id, PrefTheme.DEFAULT_ACCENT};
+        return null;
+    }
+
+    private void migrateLegacyTheme() {
+        if (!prefs.contains(KEY_LEGACY_THEME) && !prefs.contains(KEY_LEGACY_THEME_ROLLED)) return;
+        SharedPreferences.Editor editor = prefs.edit();
+        if (!prefs.contains(KEY_FLAVOR)) {
+            String[] legacy = parseLegacyTheme(prefs.getString(KEY_LEGACY_THEME, null));
+            if (legacy != null) {
+                editor.putString(KEY_FLAVOR, legacy[0]);
+                editor.putString(KEY_ACCENT, legacy[1]);
+            }
+        }
+        String[] rolled = parseLegacyTheme(prefs.getString(KEY_LEGACY_THEME_ROLLED, null));
+        if (rolled != null && Themes.isAccent(rolled[1]) && !prefs.contains(KEY_ACCENT_ROLLED)) {
+            editor.putString(KEY_ACCENT_ROLLED, rolled[1]);
+        }
+        editor.remove(KEY_LEGACY_THEME).remove(KEY_LEGACY_THEME_ROLLED).commit();
     }
 
     public static synchronized PrefsManager getInstance(Context context) {
@@ -49,20 +88,31 @@ public class PrefsManager {
         return instance;
     }
 
-    public String getTheme() {
-        return prefs.getString(KEY_THEME, PrefTheme.DEFAULT);
+    public String getFlavor() {
+        String id = prefs.getString(KEY_FLAVOR, PrefTheme.DEFAULT_FLAVOR);
+        return Themes.isFlavor(id) ? id : PrefTheme.DEFAULT_FLAVOR;
     }
 
-    public void setTheme(String themeId) {
-        prefs.edit().putString(KEY_THEME, themeId).commit();
+    public void setFlavor(String flavorId) {
+        prefs.edit().putString(KEY_FLAVOR, flavorId).commit();
     }
 
-    public String getRolledThemeId() {
-        return prefs.getString(KEY_THEME_ROLLED_ID, PrefTheme.CATPPUCCIN_MOCHA_MAUVE);
+    public String getAccent() {
+        String id = prefs.getString(KEY_ACCENT, PrefTheme.DEFAULT_ACCENT);
+        return Themes.isAccent(id) || PrefTheme.ACCENT_RANDOM.equals(id) ? id : PrefTheme.DEFAULT_ACCENT;
     }
 
-    public void setRolledTheme(String themeId) {
-        prefs.edit().putString(KEY_THEME_ROLLED_ID, themeId).commit();
+    public void setAccent(String accentId) {
+        prefs.edit().putString(KEY_ACCENT, accentId).commit();
+    }
+
+    public String getRolledAccent() {
+        String id = prefs.getString(KEY_ACCENT_ROLLED, Themes.DEFAULT_ACCENT_COLOR);
+        return Themes.isAccent(id) ? id : Themes.DEFAULT_ACCENT_COLOR;
+    }
+
+    public void setRolledAccent(String accentId) {
+        prefs.edit().putString(KEY_ACCENT_ROLLED, accentId).commit();
     }
 
     /** Page ids (see WdNavbar) in tab order. Always a permutation of 0..3, whatever was stored. */
@@ -180,7 +230,8 @@ public class PrefsManager {
     public JSONObject exportSettings() {
         JSONObject json = new JSONObject();
         try {
-            json.put(KEY_THEME, getTheme());
+            json.put(KEY_FLAVOR, getFlavor());
+            json.put(KEY_ACCENT, getAccent());
             json.put(KEY_ZOOM_PERCENT, getZoomPercent());
             json.put(KEY_TAB_ORDER, joinTabOrder(getTabOrder()));
             json.put(KEY_APP_TIMER, Hms.normalize(getAppTimer()));
@@ -197,9 +248,19 @@ public class PrefsManager {
     /** Only known keys are read, so backups from other builds cannot inject anything else. */
     public void importSettings(JSONObject json) {
         SharedPreferences.Editor editor = prefs.edit();
-        String theme = json.optString(KEY_THEME, null);
-        if (theme != null && (PrefTheme.CATPPUCCIN_MOCHA_RANDOM.equals(theme) || Themes.byId(theme).id.equals(theme))) {
-            editor.putString(KEY_THEME, theme);
+        String flavor = json.optString(KEY_FLAVOR, null);
+        String accent = json.optString(KEY_ACCENT, null);
+        if (flavor == null) {
+            // Backups from older builds carry a single theme id.
+            String[] legacy = parseLegacyTheme(json.optString(KEY_LEGACY_THEME, null));
+            if (legacy != null) {
+                flavor = legacy[0];
+                accent = legacy[1];
+            }
+        }
+        if (flavor != null && Themes.isFlavor(flavor)) editor.putString(KEY_FLAVOR, flavor);
+        if (accent != null && (Themes.isAccent(accent) || PrefTheme.ACCENT_RANDOM.equals(accent))) {
+            editor.putString(KEY_ACCENT, accent);
         }
         int zoom = json.optInt(KEY_ZOOM_PERCENT, 0);
         if (zoom > 0) editor.putInt(KEY_ZOOM_PERCENT, ZoomManager.clamp(zoom));

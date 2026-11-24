@@ -20,6 +20,7 @@ import com.rama.txori_zero.managers.ZoomManager;
 import com.rama.txori_zero.pages.HomePage;
 import com.rama.txori_zero.pages.Page;
 import com.rama.txori_zero.pages.RoulettePage;
+import com.rama.txori_zero.pages.SettingsPage;
 import com.rama.txori_zero.pages.StopwatchPage;
 import com.rama.txori_zero.pages.TimerPage;
 import com.rama.txori_zero.widgets.WdNavbar;
@@ -35,9 +36,10 @@ public class Main extends BaseActivity {
     private View editButton;
     private View closeButton;
     private View flashOverlay;
-    private final View[] pageViews = new View[4];
-    private final Page[] pages = new Page[4];
+    private final View[] pageViews = new View[5];
+    private final Page[] pages = new Page[5];
     private HomePage home;
+    private SettingsPage settings;
     private int currentPage = WdNavbar.HOME;
     private final Handler handler = new Handler();
     private final Runnable hideFlash = () -> flashOverlay.setVisibility(View.GONE);
@@ -59,18 +61,20 @@ public class Main extends BaseActivity {
         pageViews[WdNavbar.STOPWATCH] = findViewById(R.id.page_stopwatch);
         pageViews[WdNavbar.TIMER] = findViewById(R.id.page_timer);
         pageViews[WdNavbar.ROULETTE] = findViewById(R.id.page_roulette);
+        pageViews[WdNavbar.SETTINGS] = findViewById(R.id.page_settings);
         home = new HomePage(this, pageViews[WdNavbar.HOME], helper, db);
         pages[WdNavbar.HOME] = home;
         pages[WdNavbar.STOPWATCH] = new StopwatchPage(this, pageViews[WdNavbar.STOPWATCH]);
         pages[WdNavbar.TIMER] = new TimerPage(this, pageViews[WdNavbar.TIMER]);
         pages[WdNavbar.ROULETTE] = new RoulettePage(this, pageViews[WdNavbar.ROULETTE], helper, db);
+        settings = new SettingsPage(this, pageViews[WdNavbar.SETTINGS]);
+        pages[WdNavbar.SETTINGS] = settings;
 
         flashOverlay = findViewById(R.id.flash_overlay);
         editButton = findViewById(R.id.edit_btn);
         closeButton = findViewById(R.id.close_btn);
         editButton.setOnClickListener(v -> pages[currentPage].onEdit());
         closeButton.setOnClickListener(v -> pages[currentPage].onClose());
-        findViewById(R.id.open_settings).setOnClickListener(v -> startActivity(new Intent(Main.this, Settings.class)));
 
         navbar = (WdNavbar) findViewById(R.id.navbar);
         navbar.setOnNavigateListener(page -> navigateTo(page));
@@ -96,9 +100,19 @@ public class Main extends BaseActivity {
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-        // The settings screen may have changed the tab order, theme or zoom.
-        navbar.setOrder(PrefsManager.getInstance(this).getTabOrder());
         refreshTheme();
+    }
+
+    @Override
+    protected void onPause() {
+        settings.flush();
+        super.onPause();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        settings.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -120,6 +134,8 @@ public class Main extends BaseActivity {
     }
 
     private void navigateTo(int page) {
+        // Leaving settings: commit a zoom value that is still being typed.
+        if (settings != null && currentPage == WdNavbar.SETTINGS && page != currentPage) settings.flush();
         currentPage = page;
         for (int i = 0; i < pageViews.length; i++) {
             pageViews[i].setVisibility(i == page ? View.VISIBLE : View.GONE);
@@ -134,6 +150,12 @@ public class Main extends BaseActivity {
         ThemeManager.applyTheme(this, root);
         navbar.setActive(currentPage, ThemeManager.currentPalette(this));
         home.refreshTheme();
+    }
+
+    /** Re-lays the navbar out after the tab order changed in settings. */
+    public void refreshTabOrder() {
+        navbar.setOrder(PrefsManager.getInstance(this).getTabOrder());
+        refreshTheme();
     }
 
     public void setTopBar(boolean edit, boolean close) {

@@ -47,14 +47,14 @@
                 android:layout_weight="1" />
 
             <FrameLayout
-                android:id="@+id/open_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="12sp">
+                android:padding="12sp"
+                android:visibility="gone">
 
                 <ImageView
                     style="@style/Icon24"
-                    android:contentDescription="@string/alt_open_settings"
+                    android:importantForAccessibility="no"
                     android:src="@drawable/px_cog" />
             </FrameLayout>
         </LinearLayout>
@@ -85,6 +85,12 @@
             <include
                 android:id="@+id/page_roulette"
                 layout="@layout/page_roulette"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <include
+                android:id="@+id/page_settings"
+                layout="@layout/page_settings"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </FrameLayout>

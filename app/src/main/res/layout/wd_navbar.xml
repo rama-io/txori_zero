@@ -50,4 +50,17 @@
             android:contentDescription="@string/alt_nav_roulette"
             android:src="@drawable/px_shuffle" />
     </FrameLayout>
+
+    <View style="@style/SeparatorListHorizontalSmall" />
+
+    <FrameLayout
+        android:id="@+id/nav_settings"
+        style="@style/NavBtn">
+
+        <ImageView
+            android:id="@+id/nav_settings_icon"
+            style="@style/Icon24"
+            android:contentDescription="@string/alt_nav_settings"
+            android:src="@drawable/px_cog" />
+    </FrameLayout>
 </merge>

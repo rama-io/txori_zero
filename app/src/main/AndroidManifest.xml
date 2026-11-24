@@ -103,10 +103,6 @@
             android:exported="false" />
 
         <activity
-            android:name=".activities.Settings"
-            android:exported="false" />
-
-        <activity
             android:name=".activities.Main"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true"

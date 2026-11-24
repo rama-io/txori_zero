@@ -16,14 +16,16 @@ public class WdNavbar extends LinearLayout {
     public static final int TIMER = 1;
     public static final int HOME = 2;
     public static final int ROULETTE = 3;
+    /** Always the last tab, it is not part of the reorderable tab order. */
+    public static final int SETTINGS = 4;
 
     public interface OnNavigateListener {
         void onNavigate(int page);
     }
 
-    private final View[] buttons = new View[4];
-    private final ImageView[] icons = new ImageView[4];
-    private final View[] separators = new View[3];
+    private final View[] buttons = new View[5];
+    private final ImageView[] icons = new ImageView[5];
+    private final View[] separators = new View[4];
     private OnNavigateListener listener;
 
     public WdNavbar(Context context) {
@@ -37,10 +39,12 @@ public class WdNavbar extends LinearLayout {
         buttons[STOPWATCH] = findViewById(R.id.nav_stopwatch);
         buttons[TIMER] = findViewById(R.id.nav_timer);
         buttons[ROULETTE] = findViewById(R.id.nav_roulette);
+        buttons[SETTINGS] = findViewById(R.id.nav_settings);
         icons[HOME] = (ImageView) findViewById(R.id.nav_home_icon);
         icons[STOPWATCH] = (ImageView) findViewById(R.id.nav_stopwatch_icon);
         icons[TIMER] = (ImageView) findViewById(R.id.nav_timer_icon);
         icons[ROULETTE] = (ImageView) findViewById(R.id.nav_roulette_icon);
+        icons[SETTINGS] = (ImageView) findViewById(R.id.nav_settings_icon);
         // The layout alternates button, separator, button, ...
         for (int i = 0; i < separators.length; i++) {
             separators[i] = getChildAt(i * 2 + 1);
@@ -53,13 +57,14 @@ public class WdNavbar extends LinearLayout {
         }
     }
 
-    /** Lays the buttons out in the given order of page ids. */
+    /** Lays the buttons out in the given order of page ids, followed by the fixed settings button. */
     public void setOrder(int[] order) {
         removeAllViews();
         for (int i = 0; i < order.length; i++) {
             addView(buttons[order[i]]);
-            if (i < separators.length) addView(separators[i]);
+            addView(separators[i]);
         }
+        addView(buttons[SETTINGS]);
     }
 
     public void setOnNavigateListener(OnNavigateListener listener) {
